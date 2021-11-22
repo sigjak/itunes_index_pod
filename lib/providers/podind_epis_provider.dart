@@ -20,8 +20,8 @@ class PodIndexEpisodeProvider with ChangeNotifier {
       items = episodes.items!;
 
       notifyListeners();
-      print(items.length);
-      print(items[0].title);
+      //print(items.length);
+      // print(items[0].title);
     } else {
       print('Error');
     }
