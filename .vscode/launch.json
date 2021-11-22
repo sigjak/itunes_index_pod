@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "debug"
+           // "program": "main.dart"
+        },
+        {
+            "type": "node-terminal",
+            "name": "JavaScript Debug Terminal",
+            "request": "launch",
+            "cwd": "${workspaceFolder}"
+        }
+   
+    ]
+}
