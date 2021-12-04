@@ -16,8 +16,8 @@ import '../sql/podcast_sql_services.dart';
 //import '../screens/search_screen.dart';
 
 class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({Key? key}) : super(key: key);
-
+  const FavoriteScreen({required this.isConnected, Key? key}) : super(key: key);
+  final bool isConnected;
   @override
   _FavoriteScreenState createState() => _FavoriteScreenState();
 }
@@ -202,14 +202,18 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                 ],
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AudioScreen(
-                                                itunesId: podcast.podcastFeed
-                                                    .toString(),
-                                              )),
-                                    );
+                                    widget.isConnected
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AudioScreen(
+                                                      itunesId: podcast
+                                                          .podcastFeed
+                                                          .toString(),
+                                                    )),
+                                          )
+                                        : null;
                                   },
                                   child: Card(
                                     elevation: 5,

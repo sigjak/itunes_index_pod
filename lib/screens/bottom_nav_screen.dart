@@ -14,7 +14,9 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int currentIndex = 0;
   List screens = [
-    const FavoriteScreen(),
+    const FavoriteScreen(
+      isConnected: true,
+    ),
     const SearchScreen(),
     const TrendScreen()
   ];
