@@ -57,7 +57,6 @@ class Result {
   int? trackId;
   String? collectionName;
   String? trackName;
-
   String? collectionViewUrl;
   String? feedUrl;
   String? trackViewUrl;
@@ -67,11 +66,8 @@ class Result {
   String? artistName;
   String description;
   DateTime? releaseDate;
-
   int? trackCount;
-
   String? primaryGenreName;
-
   String? artworkUrl600;
   List<String>? genreIds;
   List<String>? genres;

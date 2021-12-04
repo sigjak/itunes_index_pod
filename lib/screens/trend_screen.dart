@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:itunes_pod/providers/podind_epis_provider.dart';
+//import 'package:itunes_pod/providers/podind_epis_provider.dart';
 import 'package:itunes_pod/providers/search_provider.dart';
 import 'package:itunes_pod/screens/audio_screen.dart';
 import 'package:provider/provider.dart';
@@ -186,7 +186,6 @@ class _TrendScreenState extends State<TrendScreen> {
                                             trend.collectionId.toString();
                                       });
                                       getDescription(trend);
-                                      print(currentItunesId);
                                     },
                                     child: Card(
                                       child: Stack(children: [
@@ -249,13 +248,13 @@ class _TrendScreenState extends State<TrendScreen> {
                         )
                       : const CircularProgressIndicator(),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      context
-                          .read<PodIndexEpisodeProvider>()
-                          .getEpisodes(201671138);
-                    },
-                    child: const Text('pre')),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       context
+                //           .read<PodIndexEpisodeProvider>()
+                //           .getEpisodes(201671138);
+                //     },
+                //     child: const Text('pre')),
               ],
             ),
     );

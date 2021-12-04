@@ -3,7 +3,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import './providers/podind_epis_provider.dart';
+//import './providers/podind_epis_provider.dart';
 import './providers/search_provider.dart';
 //import 'package:itunes_pod/screens/bottom_nav_screen.dart';
 import './screens/init_page.dart';
@@ -27,7 +27,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => PodcastServices()),
     ChangeNotifierProvider(create: (_) => SaveService()),
     ChangeNotifierProvider(create: (_) => SearchByName()),
-    ChangeNotifierProvider(create: (_) => PodIndexEpisodeProvider())
+    //   ChangeNotifierProvider(create: (_) => PodIndexEpisodeProvider())
   ], child: const MyApp()));
 }
 
