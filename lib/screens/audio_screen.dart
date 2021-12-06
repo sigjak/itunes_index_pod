@@ -300,7 +300,6 @@ class _AudioScreenState extends State<AudioScreen> with WidgetsBindingObserver {
                                             )
                                           ],
                                         ),
-                                        Text(episode.releaseDate.toString()),
                                         Text(
                                           episode.description ?? '',
                                           style: const TextStyle(fontSize: 12),
