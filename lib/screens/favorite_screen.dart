@@ -4,16 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:itunes_pod/screens/audio_screen_podindex.dart';
 import 'package:itunes_pod/screens/play_saved.dart';
-
 import 'package:provider/provider.dart';
 import './audio_screen.dart';
 import '/sql/episode_favorite_model.dart';
 import '../services/save_service.dart';
-//import '../sql/podcasts_favorite_model.dart';
 import '../sql/podcast_sql_services.dart';
-//import '../screens/search_screen.dart';
+import '../providers/epis_podindex_itunes.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({required this.isConnected, Key? key}) : super(key: key);
@@ -202,6 +200,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                 ],
                                 child: GestureDetector(
                                   onTap: () {
+                                    print(podcast.podcastFeed);
                                     widget.isConnected
                                         ? Navigator.push(
                                             context,
@@ -259,6 +258,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       height: 50,
                       child: CircularProgressIndicator()),
                 )),
+          SliverToBoxAdapter(
+            child: ElevatedButton(
+                onPressed: () {
+                  context
+                      .read<ItunesPindexEpisodeProvider>()
+                      .getEpisodes(214089682);
+                },
+                child: Text('goo')),
+          )
         ],
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,

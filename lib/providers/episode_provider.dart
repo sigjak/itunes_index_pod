@@ -17,6 +17,9 @@ class ItunesEpisodes with ChangeNotifier {
       final decoded = jsonDecode(result.body);
       var res = Episodes.fromJson(decoded);
       episodeList = [...res.results!];
+      for (var element in episodeList) {
+        print(element.trackName);
+      }
       var firstItem = episodeList[0];
       episodeList.removeAt(0);
       episodeList.sort((a, b) => (b.releaseDate!).compareTo(a.releaseDate!));

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itunes_pod/providers/epis_podindex_itunes.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,8 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => PodcastServices()),
     ChangeNotifierProvider(create: (_) => SaveService()),
     ChangeNotifierProvider(create: (_) => SearchByName()),
+    ChangeNotifierProvider(create: (_) => ItunesPindexEpisodeProvider()),
+
     //   ChangeNotifierProvider(create: (_) => PodIndexEpisodeProvider())
   ], child: const MyApp()));
 }

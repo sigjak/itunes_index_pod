@@ -226,6 +226,7 @@ class _TrendScreenState extends State<TrendScreen> {
                               padding: const EdgeInsets.all(12),
                               child: GestureDetector(
                                 onTap: () {
+                                  print(currentItunesId);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
