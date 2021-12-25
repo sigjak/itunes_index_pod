@@ -90,7 +90,8 @@ class _AudioScreenPodState extends State<AudioScreenPod>
     try {
       AudioSource audioSource = AudioSource.uri(
           Uri.parse(episode.enclosureUrl!),
-          tag: MediaItem(id: '1', album: episode.title, title: episode.title!));
+          tag: MediaItem(
+              id: '1', album: widget.podcastName, title: episode.title!));
       await player.setAudioSource(audioSource);
       Duration seeking = await posService.getSavedPosition(episodeName);
 

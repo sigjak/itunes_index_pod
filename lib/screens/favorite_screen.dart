@@ -12,7 +12,6 @@ import './audio_screen.dart';
 import '/sql/episode_favorite_model.dart';
 import '../services/save_service.dart';
 import '../sql/podcast_sql_services.dart';
-import '../providers/epis_podindex_itunes.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({required this.isConnected, Key? key}) : super(key: key);
