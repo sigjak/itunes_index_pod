@@ -308,7 +308,8 @@ class _AudioScreenPodState extends State<AudioScreenPod>
                                           ],
                                         ),
                                         Text(
-                                          episode.description ?? '',
+                                          Bidi.stripHtmlIfNeeded(
+                                              episode.description ?? ''),
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                       ],
