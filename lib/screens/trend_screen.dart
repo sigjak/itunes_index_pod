@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:itunes_pod/providers/podind_epis_provider.dart';
 import 'package:itunes_pod/providers/search_provider.dart';
 import 'package:itunes_pod/screens/audio_screen.dart';
@@ -81,7 +82,7 @@ class _TrendScreenState extends State<TrendScreen> {
   String currentPodcastName = '';
   bool isLoading = true;
   int isSelected = 0;
-
+  late bool itunesValue;
   bool isFirstTime = true;
   bool isDescription = true;
   String description = '';
@@ -94,9 +95,11 @@ class _TrendScreenState extends State<TrendScreen> {
     super.initState();
   }
 
-  getTrendData(String trendId, String name) {
+  getTrendData(String trendId, String name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     context.read<Trends>().getTrends(trendId).then((_) {
       setState(() {
+        itunesValue = prefs.getBool('itunesValue')!;
         trendData = context.read<Trends>().trendList;
         isLoading = false;
         isSelected = 0;
@@ -226,7 +229,9 @@ class _TrendScreenState extends State<TrendScreen> {
                               padding: const EdgeInsets.all(12),
                               child: GestureDetector(
                                 onTap: () {
-                                  print(currentItunesId);
+                                  // print(currentItunesId);
+                                  // print(currentPodcastName);
+                                  // print(itunesValue);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

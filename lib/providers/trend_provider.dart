@@ -18,7 +18,7 @@ class Trends with ChangeNotifier {
       var decoded = jsonDecode(result.body);
       var data = ItunesTrend.fromJson(decoded);
       trendList = [...data.results!];
-      print(trendList[0].feedUrl);
+      //  print(trendList[0].feedUrl);
     }
 
     notifyListeners();

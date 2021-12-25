@@ -21,13 +21,13 @@ class ItunesPindexEpisodeProvider with ChangeNotifier {
 
       notifyListeners();
 
-      print(items[0].title);
-      print(items[0].datePublished);
-      print(items[0].datePublishedPretty);
-      print(items[0].duration);
-      print(items[0].feedImage);
+      // print(items[0].title);
+      // print(items[0].datePublished);
+      // print(items[0].datePublishedPretty);
+      // print(items[0].duration);
+      // print(items[0].feedImage);
 
-      print(Duration(seconds: items[0].duration!));
+      // print(Duration(seconds: items[0].duration!));
     } else {
       print('Error');
     }

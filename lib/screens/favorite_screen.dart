@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:itunes_pod/screens/audio_screen_podindex.dart';
 import 'package:itunes_pod/screens/play_saved.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   bool isLoaded = false;
   // bool isEpisodes = false;
   // AudioPlayer player = AudioPlayer();
-
+  bool itunesValue = true;
   @override
   void initState() {
     super.initState();
@@ -38,6 +39,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         isLoaded = true;
       });
     });
+    itunesPodindex(true);
   }
 
   Future<bool> checkIfSomethingSaved(podcastname) async {
@@ -100,6 +102,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 
+  Future<void> itunesPodindex(value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('itunesValue', value);
+    setState(() {
+      itunesValue = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var pod = context.watch<PodcastServices>();
@@ -109,20 +119,28 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            //automaticallyImplyLeading: false,
             actions: [
-              // TextButton(
-              //     onPressed: () async {
-              //       String baseDir =
-              //           await context.read<SaveService>().getSdPath();
-              //       String path = '$baseDir/Podcasts';
-              //       Directory dir = Directory(path);
-              //       dir.list(recursive: false).forEach((element) {
-              //         element.deleteSync(recursive: true);
-              //       });
-              //       await context.read<PodcastServices>().deleteDB();
-              //       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              //     },
-              //     child: const Text('DeleteEverything')),
+              Builder(
+                  builder: (context) => IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      icon: const Icon(Icons.menu))),
+              Flexible(
+                  child: SwitchListTile(
+                      activeColor: Colors.grey,
+                      title: Text(
+                        itunesValue ? 'itunes' : 'podIndex',
+                        textAlign: TextAlign.right,
+                      ),
+                      value: itunesValue,
+                      onChanged: (value) {
+                        setState(() {
+                          itunesValue = value;
+                          itunesPodindex(value);
+                        });
+                      })),
               TextButton(
                   onPressed: clearCache,
                   child: const Text(
@@ -200,18 +218,26 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                 ],
                                 child: GestureDetector(
                                   onTap: () {
-                                    print(podcast.podcastFeed);
+                                    // print(itunesValue);
                                     widget.isConnected
-                                        ? Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    AudioScreen(
-                                                      itunesId: podcast
-                                                          .podcastFeed
-                                                          .toString(),
-                                                    )),
-                                          )
+                                        ? itunesValue
+                                            ? Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AudioScreen(
+                                                          itunesId: podcast
+                                                              .podcastFeed
+                                                              .toString(),
+                                                        )),
+                                              )
+                                            : Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AudioScreenPod(
+                                                            podcast: podcast)),
+                                              )
                                         : null;
                                   },
                                   child: Card(
