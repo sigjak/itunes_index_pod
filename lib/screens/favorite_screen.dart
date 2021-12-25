@@ -26,10 +26,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   bool isLoaded = false;
   // bool isEpisodes = false;
   // AudioPlayer player = AudioPlayer();
-  bool itunesValue = true;
+  late bool itunesValue = true;
   @override
   void initState() {
     super.initState();
+    setItunesValue();
     var podService = context.read<PodcastServices>();
     podService.getAllFavoritePodcasts();
     podService.getAllFavoriteEpisodes().then((_) {
@@ -39,7 +40,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         isLoaded = true;
       });
     });
-    itunesPodindex(true);
   }
 
   Future<bool> checkIfSomethingSaved(podcastname) async {
@@ -100,6 +100,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         );
       },
     );
+  }
+
+  Future<void> setItunesValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool goo = prefs.getBool('itunesValue')!;
+    setState(() {
+      itunesValue = goo;
+    });
   }
 
   Future<void> itunesPodindex(value) async {
@@ -236,7 +244,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         AudioScreenPod(
-                                                            podcast: podcast)),
+                                                          podcastName: podcast
+                                                              .podcastName,
+                                                          itunesId: podcast
+                                                              .podcastFeed,
+                                                        )),
                                               )
                                         : null;
                                   },
@@ -284,15 +296,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       height: 50,
                       child: CircularProgressIndicator()),
                 )),
-          SliverToBoxAdapter(
-            child: ElevatedButton(
-                onPressed: () {
-                  context
-                      .read<ItunesPindexEpisodeProvider>()
-                      .getEpisodes(214089682);
-                },
-                child: Text('goo')),
-          )
         ],
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,

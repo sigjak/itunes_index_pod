@@ -23,9 +23,11 @@ import '../audio/player_buttons.dart';
 import '../audio/slider_bar.dart';
 
 class AudioScreenPod extends StatefulWidget {
-  const AudioScreenPod({required this.podcast, Key? key}) : super(key: key);
-
-  final PodFavorite podcast;
+  const AudioScreenPod(
+      {required this.itunesId, required this.podcastName, Key? key})
+      : super(key: key);
+  final int itunesId;
+  final String podcastName;
 
   @override
   _AudioScreenPodState createState() => _AudioScreenPodState();
@@ -50,7 +52,7 @@ class _AudioScreenPodState extends State<AudioScreenPod>
   void initState() {
     WidgetsBinding.instance?.addObserver(this);
     var dd = context.read<PodcastServices>();
-    itunesPodcastId = widget.podcast.podcastFeed;
+    itunesPodcastId = widget.itunesId;
     context
         .read<ItunesPindexEpisodeProvider>()
         .getEpisodes(itunesPodcastId)
@@ -60,7 +62,7 @@ class _AudioScreenPodState extends State<AudioScreenPod>
       isLoaded = true;
 
       setState(() {
-        podcastName = widget.podcast.podcastName;
+        podcastName = widget.podcastName;
         podcastImage = episodes[0].feedImage ?? '';
         // itunesPodcastId = (widget.podcast.podcastFeed);
         isLoaded = true;

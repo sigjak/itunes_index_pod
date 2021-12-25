@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:itunes_pod/screens/audio_screen_podindex.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:itunes_pod/providers/podind_epis_provider.dart';
 import 'package:itunes_pod/providers/search_provider.dart';
@@ -232,11 +233,23 @@ class _TrendScreenState extends State<TrendScreen> {
                                   // print(currentItunesId);
                                   // print(currentPodcastName);
                                   // print(itunesValue);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AudioScreen(
-                                              itunesId: currentItunesId)));
+                                  itunesValue
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => AudioScreen(
+                                                itunesId: currentItunesId),
+                                          ),
+                                        )
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AudioScreenPod(
+                                                      itunesId: int.parse(
+                                                          currentItunesId),
+                                                      podcastName:
+                                                          currentPodcastName)));
                                 },
                                 child: ListTile(
                                   title: Text(

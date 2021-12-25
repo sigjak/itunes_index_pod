@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:itunes_pod/screens/bottom_nav_screen.dart';
 import 'dart:io';
 
@@ -16,10 +16,21 @@ class InitScreen extends StatefulWidget {
 
 class _InitScreenState extends State<InitScreen> {
   bool isConnected = true;
+  late bool itunesValue;
+
   @override
   void initState() {
     connCheck();
+    itunesPodindex(true);
     super.initState();
+  }
+
+  Future<void> itunesPodindex(value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('itunesValue', value);
+    setState(() {
+      itunesValue = value;
+    });
   }
 
   Future<void> checkNet() async {
