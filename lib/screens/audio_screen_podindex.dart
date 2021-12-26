@@ -377,7 +377,7 @@ class _AudioScreenPodState extends State<AudioScreenPod>
                       context.read<SaveService>().token.cancel('cancelled');
                       String dloadLocation = await context
                           .read<SaveService>()
-                          .downloadLocation('FreshAir', episode.title);
+                          .downloadLocation(podcastName, episode.title);
 
                       //clean sql of episode
                       await context
@@ -397,39 +397,46 @@ class _AudioScreenPodState extends State<AudioScreenPod>
         });
   }
 
-  Future<void> saveEpisode(episode) async {
+  Future<void> saveEpisode(Item episode) async {
     context.read<SaveService>().refreshToken();
     var podcastSql = context.read<PodcastServices>();
-    bool check = await podcastSql.checkIfPodcastInDB(episode.collectionName!);
+    bool check = await podcastSql.checkIfPodcastInDB(podcastName);
     if (!check) {
       PodFavorite pod = PodFavorite(
-        podcastName: episode.collectionName!,
-        podcastImage: episode.artworkUrl600!,
-        podcastFeed: episode.collectionId!,
+        podcastName: podcastName,
+        podcastImage: podcastImage,
+        podcastFeed: itunesPodcastId,
       );
       await podcastSql.addPodcast(pod);
     }
     // now save episode to location
+    // print(podcastName);
+    // print(podcastImage);
+    // print(itunesPodcastId);
 
     EpisFavorite favToSave = EpisFavorite(
-      podcastName: episode.collectionName!,
-      podcastImage: episode.artworkUrl600!,
-      episodeName: episode.trackName!,
-      episodeUrl: episode.episodeUrl!,
-      episodeDuration: episode.trackTimeMillis ?? 0,
-      episodeDate: episode.releaseDate!.toIso8601String(),
+      podcastName: podcastName,
+      podcastImage: podcastImage,
+      episodeName: episode.title!,
+      episodeUrl: episode.enclosureUrl!,
+      episodeDuration: episode.duration!,
+      episodeDate:
+          DateTime.fromMillisecondsSinceEpoch(episode.datePublished! * 1000)
+              .toIso8601String(),
       episodeDescription: episode.description!,
       timestamp: DateTime.now().microsecondsSinceEpoch,
       position: player.position,
       dloadLocation: 'dummy',
     );
     // print(favToSave.toString());
+
     String result = await podcastSql.addFavoriteEpisode(favToSave);
 
     if (result == 'Episode added') {
-      String dloadlocation = await context.read<SaveService>().saveEpisode(
-          episode.episodeUrl, episode.collectionName, episode.trackName);
-      await podcastSql.updateSaveLocation(dloadlocation, episode.trackName);
+      String dloadlocation = await context
+          .read<SaveService>()
+          .saveEpisode(episode.enclosureUrl!, podcastName, episode.title!);
+      await podcastSql.updateSaveLocation(dloadlocation, episode.title!);
       ScaffoldMessenger.of(context)
           .showSnackBar(snack(Icons.check, 'Episode downloaded!'));
     } else {
