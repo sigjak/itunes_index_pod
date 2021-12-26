@@ -423,7 +423,7 @@ class _AudioScreenPodState extends State<AudioScreenPod>
       episodeDate:
           DateTime.fromMillisecondsSinceEpoch(episode.datePublished! * 1000)
               .toIso8601String(),
-      episodeDescription: episode.description!,
+      episodeDescription: Bidi.stripHtmlIfNeeded(episode.description!),
       timestamp: DateTime.now().microsecondsSinceEpoch,
       position: player.position,
       dloadLocation: 'dummy',

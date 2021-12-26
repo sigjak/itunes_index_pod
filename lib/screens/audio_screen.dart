@@ -416,9 +416,9 @@ class _AudioScreenState extends State<AudioScreen> with WidgetsBindingObserver {
       position: player.position,
       dloadLocation: 'dummy',
     );
-    print(favToSave.toString());
+    // print(favToSave.toString());
     String result = await podcastSql.addFavoriteEpisode(favToSave);
-    print(episode.releaseDate);
+    //print(episode.releaseDate);
     // print(episode.episodeUrl);
     // print(episode.collectionName);
     // print(episode.trackName);
