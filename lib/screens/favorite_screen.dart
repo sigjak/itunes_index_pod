@@ -181,9 +181,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               final podcast = pod.favPodcasts[index];
 
                               return Slidable(
-                                actionPane: const SlidableDrawerActionPane(),
-                                actionExtentRatio: 0.20,
-                                actions: [
+                                startActionPane: ActionPane(
+                               extentRatio: 0.20,
+                               motion: const ScrollMotion(),
+                                children: [
                                   SlideAction(
                                       onTap: () async {
                                         bool check =
