@@ -246,8 +246,17 @@ class _AudioScreenState extends State<AudioScreen> with WidgetsBindingObserver {
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(20, 2, 20, 5),
                           child: Slidable(
-                            actionPane: const SlidableDrawerActionPane(),
-                            actionExtentRatio: 0.25,
+                            startActionPane: ActionPane(
+                              extentRatio: 0.40,
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                    backgroundColor: Colors.black87,
+                                    label: 'Save episode',
+                                    icon: Icons.download,
+                                    onPressed: (_) => slideDloads(episode))
+                              ],
+                            ),
                             child: Container(
                               constraints: const BoxConstraints(maxHeight: 175),
                               padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
@@ -310,22 +319,6 @@ class _AudioScreenState extends State<AudioScreen> with WidgetsBindingObserver {
                                 ]),
                               ),
                             ),
-                            actions: [
-                              IconSlideAction(
-                                caption: 'Save episode',
-                                icon: Icons.download,
-                                color: Colors.grey[800],
-                                onTap: () async {
-                                  showDloadIndicator(context, episode);
-
-                                  await saveEpisode(episode);
-                                  Navigator.pop(context);
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //     snack(Icons.check,
-                                  //         'Episode downloaded!'));
-                                },
-                              )
-                            ],
                           ),
                         );
                       }, childCount: episodes.length - 1),
@@ -345,6 +338,16 @@ class _AudioScreenState extends State<AudioScreen> with WidgetsBindingObserver {
           },
           child: const Icon(Icons.exit_to_app),
         ));
+  }
+
+  slideDloads(episode) async {
+    showDloadIndicator(context, episode);
+
+    await saveEpisode(episode);
+    Navigator.pop(context);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     snack(Icons.check,
+    //         'Episode downloaded!'));
   }
 
   Future<dynamic> showDloadIndicator(BuildContext context, Episode episode) {

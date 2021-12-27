@@ -267,8 +267,18 @@ class _AudioScreenPodState extends State<AudioScreenPod>
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(20, 2, 20, 5),
                           child: Slidable(
-                            actionPane: const SlidableDrawerActionPane(),
-                            actionExtentRatio: 0.25,
+                            startActionPane: ActionPane(
+                              extentRatio: 0.40,
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  backgroundColor: Colors.black87,
+                                  label: 'Save episode',
+                                  icon: Icons.download,
+                                  onPressed: (_) => slideDloads(episode),
+                                )
+                              ],
+                            ),
                             child: Container(
                               constraints: const BoxConstraints(maxHeight: 175),
                               padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
@@ -329,13 +339,6 @@ class _AudioScreenPodState extends State<AudioScreenPod>
                                 ]),
                               ),
                             ),
-                            actions: [
-                              IconSlideAction(
-                                  caption: 'Save episode',
-                                  icon: Icons.download,
-                                  color: Colors.grey[800],
-                                  onTap: slideDloads(episode))
-                            ],
                           ),
                         );
                       }, childCount: episodes.length),

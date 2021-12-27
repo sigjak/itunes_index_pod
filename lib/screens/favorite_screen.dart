@@ -181,48 +181,28 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               final podcast = pod.favPodcasts[index];
 
                               return Slidable(
-                                actionPane: const SlidableDrawerActionPane(),
-                                actionExtentRatio: 0.20,
-                                actions: [
-                                  SlideAction(
-                                      onTap: () async {
-                                        bool check =
-                                            await checkIfSomethingSaved(
-                                                podcast.podcastName);
-                                        if (check) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => PlaySaved(
-                                                podcastName:
-                                                    podcast.podcastName,
-                                                itunesId: podcast.podcastFeed
-                                                    .toString(),
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                    'Nothing saved!',
-                                                    textAlign: TextAlign.center,
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  ),
-                                                  behavior: SnackBarBehavior
-                                                      .floating));
-                                        }
-                                      },
-                                      decoration: BoxDecoration(
-                                          color: Colors.teal[900],
-                                          border: Border.all(
-                                              width: 2, color: Colors.white)),
-                                      child: const Text(
-                                        'Saved Episodes',
-                                        textAlign: TextAlign.center,
-                                      ))
-                                ],
+                                startActionPane: ActionPane(
+                                    extentRatio: 0.25,
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      CustomSlidableAction(
+                                        backgroundColor: Colors.black,
+                                        onPressed: (_) => slideCheckIf(podcast),
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: const [
+                                              Icon(Icons.play_arrow),
+                                              Text(
+                                                'Play Saved',
+                                                style: TextStyle(fontSize: 12),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
                                 child: GestureDetector(
                                   onTap: () {
                                     // print(itunesValue);
@@ -305,6 +285,29 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       //   child: const Icon(Icons.exit_to_app),
       //),
     );
+  }
+
+  slideCheckIf(podcast) async {
+    bool check = await checkIfSomethingSaved(podcast.podcastName);
+    if (check) {
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => PlaySaved(
+      //       podcastName: podcast.podcastName,
+      //       itunesId: podcast.podcastFeed.toString(),
+      //     ),
+      //   ),
+      // );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            'Nothing saved!',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20),
+          ),
+          behavior: SnackBarBehavior.floating));
+    }
   }
 }
 
