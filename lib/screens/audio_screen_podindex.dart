@@ -155,6 +155,17 @@ class _AudioScreenPodState extends State<AudioScreenPod>
   }
 
   PositionService posService = PositionService();
+
+  slideDloads(episode) async {
+    showDloadIndicator(context, episode);
+
+    await saveEpisode(episode);
+    Navigator.pop(context);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     snack(Icons.check,
+    //         'Episode downloaded!'));
+  }
+
   @override
   Widget build(BuildContext context) {
     var podsql = context.read<PodcastServices>();
@@ -320,19 +331,10 @@ class _AudioScreenPodState extends State<AudioScreenPod>
                             ),
                             actions: [
                               IconSlideAction(
-                                caption: 'Save episode',
-                                icon: Icons.download,
-                                color: Colors.grey[800],
-                                onTap: () async {
-                                  showDloadIndicator(context, episode);
-
-                                  await saveEpisode(episode);
-                                  Navigator.pop(context);
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //     snack(Icons.check,
-                                  //         'Episode downloaded!'));
-                                },
-                              )
+                                  caption: 'Save episode',
+                                  icon: Icons.download,
+                                  color: Colors.grey[800],
+                                  onTap: slideDloads(episode))
                             ],
                           ),
                         );
