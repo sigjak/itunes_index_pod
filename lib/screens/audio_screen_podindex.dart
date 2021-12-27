@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-//
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 //import 'package:itunes_pod/providers/episode_provider.dart';
 import 'package:itunes_pod/services/save_service.dart';
 import 'package:itunes_pod/sql/episode_favorite_model.dart';
@@ -307,10 +307,10 @@ class _AudioScreenPodState extends State<AudioScreenPod>
                                             )
                                           ],
                                         ),
-                                        Text(
-                                          Bidi.stripHtmlIfNeeded(
-                                              episode.description ?? ''),
-                                          style: const TextStyle(fontSize: 12),
+                                        HtmlWidget(
+                                          episode.description ?? '',
+                                          textStyle:
+                                              const TextStyle(fontSize: 12),
                                         ),
                                       ],
                                     ),
