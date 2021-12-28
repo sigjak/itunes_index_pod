@@ -290,15 +290,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   slideCheckIf(podcast) async {
     bool check = await checkIfSomethingSaved(podcast.podcastName);
     if (check) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => PlaySaved(
-      //       podcastName: podcast.podcastName,
-      //       itunesId: podcast.podcastFeed.toString(),
-      //     ),
-      //   ),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PlaySaved(
+            podcastName: podcast.podcastName,
+            itunesId: podcast.podcastFeed.toString(),
+          ),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
