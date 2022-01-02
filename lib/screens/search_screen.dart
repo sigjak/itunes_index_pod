@@ -29,6 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
         startSearch = true;
       });
     });
+    print(dataSearch.length);
   }
 
   static String stripHtmlIfNeeded(String text) {
@@ -116,98 +117,111 @@ class _SearchScreenState extends State<SearchScreen> {
         //     : const SliverToBoxAdapter(child: SizedBox()),
         startSearch
             ? SliverToBoxAdapter(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 5, 16, 10),
-                    child: ExpansionPanelList.radio(
-                      expansionCallback: (int index, bool isExpanded) async {
-                        if (dataSearch[index].description.isEmpty) {
-                          String temp = await context
-                              .read<SearchByName>()
-                              .getDescription(dataSearch[index].feedUrl);
+                child: dataSearch.isNotEmpty
+                    ? SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 5, 16, 10),
+                          child: ExpansionPanelList.radio(
+                            expansionCallback:
+                                (int index, bool isExpanded) async {
+                              if (dataSearch[index].description.isEmpty) {
+                                String temp = await context
+                                    .read<SearchByName>()
+                                    .getDescription(dataSearch[index].feedUrl);
 
-                          setState(() {
-                            dataSearch[index].description =
-                                stripHtmlIfNeeded(temp);
-                          });
-                        }
-                      },
-                      children: dataSearch.map<ExpansionPanelRadio>((podcast) {
-                        return ExpansionPanelRadio(
-                          value: podcast.collectionId!,
-                          headerBuilder: (context, isExpanded) {
-                            return ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(podcast.artworkUrl30!),
-                                ),
-                                title: Text(podcast.trackName!));
-                          },
-                          body: podcast.description.isNotEmpty
-                              ? ListTile(
-                                  title: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20, 4, 10, 10),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => AudioScreen(
-                                              itunesId: podcast.collectionId
-                                                  .toString(),
+                                setState(() {
+                                  dataSearch[index].description =
+                                      stripHtmlIfNeeded(temp);
+                                });
+                              }
+                            },
+                            children:
+                                dataSearch.map<ExpansionPanelRadio>((podcast) {
+                              return ExpansionPanelRadio(
+                                value: podcast.collectionId!,
+                                headerBuilder: (context, isExpanded) {
+                                  return ListTile(
+                                      leading: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(podcast.artworkUrl30!),
+                                      ),
+                                      title: Text(podcast.trackName!));
+                                },
+                                body: podcast.description.isNotEmpty
+                                    ? ListTile(
+                                        title: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 4, 10, 10),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AudioScreen(
+                                                    itunesId: podcast
+                                                        .collectionId
+                                                        .toString(),
+                                                  ),
+                                                ),
+                                              );
+                                              _scrollController.animateTo(0,
+                                                  duration: const Duration(
+                                                      seconds: 2),
+                                                  curve: Curves.easeInOutCirc);
+                                            },
+                                            child: Container(
+                                              constraints: const BoxConstraints(
+                                                  maxHeight: 120),
+                                              child: SingleChildScrollView(
+                                                child: Text(
+                                                  podcast.description,
+                                                  style: const TextStyle(
+                                                      fontSize: 10),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        );
-                                        _scrollController.animateTo(0,
-                                            duration:
-                                                const Duration(seconds: 2),
-                                            curve: Curves.easeInOutCirc);
-                                      },
-                                      child: Container(
-                                        constraints: const BoxConstraints(
-                                            maxHeight: 120),
-                                        child: SingleChildScrollView(
-                                          child: Text(
-                                            podcast.description,
-                                            style:
-                                                const TextStyle(fontSize: 10),
-                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                  // trailing: IconButton(
-                                  //   onPressed: () {
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) => AudioScreen(
-                                  //           itunesId:
-                                  //               podcast.collectionId.toString(),
-                                  //         ),
-                                  //       ),
-                                  //     );
-                                  //     _scrollController.animateTo(0,
-                                  //         duration: const Duration(seconds: 2),
-                                  //         curve: Curves.easeInOutCirc);
-                                  //     // setState(() {
-                                  //     //   playerPlaying = playResult;
-                                  //     // });
-                                  //   },
-                                  //   icon: const Icon(
-                                  //     Icons.podcasts,
-                                  //     color: Colors.amber,
-                                  //     size: 32,
-                                  //   ),
-                                  // ),
-                                )
-                              : const CircularProgressIndicator(),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
+                                        // trailing: IconButton(
+                                        //   onPressed: () {
+                                        //     Navigator.push(
+                                        //       context,
+                                        //       MaterialPageRoute(
+                                        //         builder: (context) => AudioScreen(
+                                        //           itunesId:
+                                        //               podcast.collectionId.toString(),
+                                        //         ),
+                                        //       ),
+                                        //     );
+                                        //     _scrollController.animateTo(0,
+                                        //         duration: const Duration(seconds: 2),
+                                        //         curve: Curves.easeInOutCirc);
+                                        //     // setState(() {
+                                        //     //   playerPlaying = playResult;
+                                        //     // });
+                                        //   },
+                                        //   icon: const Icon(
+                                        //     Icons.podcasts,
+                                        //     color: Colors.amber,
+                                        //     size: 32,
+                                        //   ),
+                                        // ),
+                                      )
+                                    : const CircularProgressIndicator(),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      )
+                    : const Center(
+                        child: Padding(
+                        padding: EdgeInsets.only(top: 24.0),
+                        child: Text(
+                          'Nothing found!',
+                          style: TextStyle(fontSize: 28),
+                        ),
+                      )),
               )
             : const SliverToBoxAdapter(child: SizedBox()),
       ]),
