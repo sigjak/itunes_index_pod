@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -256,12 +254,12 @@ class _PlaySavedState extends State<PlaySaved> with WidgetsBindingObserver {
                             padding: const EdgeInsets.fromLTRB(20, 2, 20, 5),
                             child: Slidable(
                               startActionPane: ActionPane(
-                                extentRatio: 0.35,
+                                extentRatio: 0.25,
                                 motion: const ScrollMotion(),
                                 children: [
                                   SlidableAction(
                                     backgroundColor: Colors.red,
-                                    label: 'Delete episode',
+                                    label: 'Delete',
                                     icon: Icons.delete,
                                     onPressed: (_) =>
                                         slideDelete(episode, podsql),
@@ -328,7 +326,7 @@ class _PlaySavedState extends State<PlaySaved> with WidgetsBindingObserver {
                                           Text(
                                             episode.description ?? '',
                                             style:
-                                                const TextStyle(fontSize: 10),
+                                                const TextStyle(fontSize: 12),
                                           ),
                                         ],
                                       ),

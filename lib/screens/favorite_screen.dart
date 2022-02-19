@@ -182,7 +182,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
                               return Slidable(
                                 startActionPane: ActionPane(
-                                    extentRatio: 0.25,
+                                    extentRatio: 0.30,
                                     motion: const ScrollMotion(),
                                     children: [
                                       CustomSlidableAction(

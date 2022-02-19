@@ -29,7 +29,6 @@ class _SearchScreenState extends State<SearchScreen> {
         startSearch = true;
       });
     });
-    print(dataSearch.length);
   }
 
   static String stripHtmlIfNeeded(String text) {
